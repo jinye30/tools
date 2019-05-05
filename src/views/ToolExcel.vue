@@ -45,14 +45,34 @@
 			<el-table-column prop="balance" label="账户余额" width="120" >
 			</el-table-column>
 			<el-table-column prop="bank" label="交易行名" min-width="180" >
+				<template slot-scope="scope">
+				 <span v-html="brightenKeyword(scope.row.bank, filters.name)" ></span>
+				 </template>
 			</el-table-column>
 			<el-table-column prop="city" label="对方省市" min-width="100" >
+				<template slot-scope="scope">
+				 <span v-html="brightenKeyword(scope.row.city, filters.name)" ></span>
+				 </template>
 			</el-table-column>
 			<el-table-column prop="name" label="对方账号" min-width="180" >
+				<template slot-scope="scope">
+				 <span v-html="brightenKeyword(scope.row.name, filters.name)" ></span>
+				 </template>
 			</el-table-column>
-			<el-table-column prop="account" label="对方户名" min-width="100" >
+			<!-- <el-table-column prop="account" label="对方户名" min-width="100" >
+			</el-table-column> -->
+			<el-table-column  label="对方户名" min-width="100" >
+				<!-- <template slot-scope="scope">
+					<span  v-html="showData(list.account)"></span>
+				</template> -->
+				<template slot-scope="scope">
+				 <span v-html="brightenKeyword(scope.row.account, filters.name)" ></span>
+				 </template>
 			</el-table-column>
 			<el-table-column prop="remarks" label="交易用途" min-width="100" >
+				<template slot-scope="scope">
+				 <span v-html="brightenKeyword(scope.row.remarks, filters.name)" ></span>
+				 </template>
 			</el-table-column>
 			
 		</el-table>
@@ -107,7 +127,14 @@
 			}
 		},
 		methods: {
-			
+			brightenKeyword(val, keyword) {
+			   val = val + '';
+			   if (val.indexOf(keyword) !== -1 && keyword !== '') {
+					return val.replace(keyword, '<font color="#409EFF">' + keyword + '</font>')
+			   } else {
+				  return val
+				}
+			},
 			returncount(){
 				this.result = this.sumresult / this.num ;
 			},
@@ -380,7 +407,20 @@
 					if (_this.filters.name) {
 					return this.parmas.filter(function(parmas) {
 					return Object.keys(parmas).some(function(key) {
+						
 					return String(parmas[key]).toLowerCase().indexOf(_this.filters.name) > -1
+					// let resultsreach = String(parmas[key]).toLowerCase().indexOf(_this.filters.name) > -1
+					// console.log(resultsreach);
+					// if(resultsreach){
+					// 	 // 匹配关键字正则
+					// 	// let replaceReg = new RegExp(_this.filters.name, 'g');
+					// 	// // 高亮替换v-html值
+					// 	// let replaceString = '<span class="search-text">' + _this.filters.name + '</span>';
+					// 	// 开始替换
+					// 	 // = .replace(replaceReg, replaceString);
+					// 	return resultsreach.replace(_this.filters.name, '<font color="#409EFF">' + _this.filters.name + '</font>');
+					// }
+					// return resultsreach;
 					})
 					})
 					}
