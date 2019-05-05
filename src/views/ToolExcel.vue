@@ -37,6 +37,9 @@
 			<el-table-column type="index" width="60">
 			</el-table-column>
 			<el-table-column prop="date" label="交易时间" width="120" >
+				<template slot-scope="scope">
+				 <div v-html="insertStr(insertStr(scope.row.date,4,'/'),7,'/')"></div>
+				 </template>
 			</el-table-column>
 			<el-table-column prop="income" label="收入金额" width="100"  >
 			</el-table-column>
@@ -127,6 +130,14 @@
 			}
 		},
 		methods: {
+			insertStr(soure, start, newStr){   
+               //为字符串插入字符 其中soure为原字符串,start为将要插入字符的位置，newStr为要插入的字符
+			 
+			   // return soure.slice(0, start) + newStr + soure.slice(start);
+			   let resultdate =soure.slice(0, start) + newStr + soure.slice(start);
+			    // console.log(resultdate);
+			   return resultdate;
+			},
 			brightenKeyword(val, keyword) {
 			   val = val + '';
 			   if (val.indexOf(keyword) !== -1 && keyword !== '') {
@@ -354,6 +365,7 @@
 					}
 					//获取到该行date字段的值 
 					obj.date=roa[date+row].v;
+					
 					//获取到该行income字段的值
 					obj.income=roa[income+row].v;
 					//获取到该行pay字段的值
