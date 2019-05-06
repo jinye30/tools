@@ -141,7 +141,7 @@
 			brightenKeyword(val, keyword) {
 			   val = val + '';
 			   if (val.indexOf(keyword) !== -1 && keyword !== '') {
-					return val.replace(keyword, '<font color="#409EFF">' + keyword + '</font>')
+					return val.replace(keyword, '<font color="#FF0000">' + keyword + '</font>')
 			   } else {
 				  return val
 				}
